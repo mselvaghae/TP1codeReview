@@ -16,7 +16,7 @@ jobs:
 
     # Step 2: Navigate to the Java Project Directory
     - name: Navigate to Java Project Directory
-      working-directory: AwesomePasswordChecker
+      run: cd AwesomePasswordChecker
 
     # Step 3: Set Up Java Environment
     - name: Set up JDK
