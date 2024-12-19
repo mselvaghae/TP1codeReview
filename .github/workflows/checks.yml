@@ -26,6 +26,7 @@ jobs:
       run: pip install semgrep
 
     - name: Run Checkstyle
+      working-directory: AwesomePasswordChecker
       run: mvn checkstyle:check
 
     - name: Run Unit Tests
