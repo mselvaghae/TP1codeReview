@@ -10,25 +10,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout Code
     - name: Checkout Code
       uses: actions/checkout@v3
-  
 
+    # Step 2: Navigate to the Java Project Directory
+    - name: Navigate to Java Project Directory
+      working-directory: AwesomePasswordChecker
+
+    # Step 3: Set Up Java Environment
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
 
+    # Step 4: Generate Javadoc
     - name: Generate Javadoc
-      run: mvn javadoc:javadoc
+      run: mvn clean javadoc:javadoc
 
+    # Step 5: Deploy Javadoc to GH-Pages
     - name: Deploy to GH-Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./target/site/apidocs
+        publish_dir: AwesomePasswordChecker/target/site/apidocs
+        branch: gh-pages
         destination_dir: javadoc/3.4.1
 
+    # Step 6: Add CNAME (Optional for Custom Domains)
     - name: Add CNAME
-      run: echo 'blah.com' > target/site/apidocs/CNAME
+      run: echo 'blah.com' > AwesomePasswordChecker/target/site/apidocs/CNAME
