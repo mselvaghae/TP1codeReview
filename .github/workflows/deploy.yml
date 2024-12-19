@@ -44,3 +44,32 @@ jobs:
     - name: Deploy to GitHub Maven Registry
       working-directory: AwesomePasswordChecker
       run: mvn clean deploy
+
+  deploy-cobertura:
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout Code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up JDK
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    # Step 3: Generate Cobertura Report
+    - name: Generate Cobertura Report
+      working-directory: AwesomePasswordChecker
+      run: mvn cobertura:cobertura
+
+    # Step 4: Deploy Cobertura Report to GitHub Pages
+    - name: Deploy Cobertura Report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./target/site/cobertura
+        destination_dir: cobertura/${{ github.event.ref_name }}
