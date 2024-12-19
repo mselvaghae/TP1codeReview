@@ -1,4 +1,4 @@
-name: Build, Deploy, and Publish
+name: Deploy Maven Artifacts
 
 on:
   push:
@@ -6,17 +6,23 @@ on:
       - main
 
 jobs:
-  deploy-maven:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
+    # Step 1: Checkout Code
+    - name: Checkout Code
       uses: actions/checkout@v3
+
+    # Step 2: Set up JDK
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Cache Maven dependencies
+
+    # Step 3: Cache Maven Dependencies
+    - name: Cache Maven Dependencies
       uses: actions/cache@v3
       with:
         path: ~/.m2
@@ -24,27 +30,23 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-m2
 
-    - name: Build and Deploy to GitHub Maven Registry
-      run: mvn clean install deploy
-      working-directory: AwesomePasswordChecker
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # Step 4: Create Maven `settings.xml`
+    - name: Set up Maven settings.xml
+      run: |
+        mkdir -p ~/.m2
+        echo "<settings>
+          <servers>
+            <server>
+              <id>github</id>
+              <username>${{ secrets.GITHUB_ACTOR }}</username>
+              <password>${{ secrets.GITHUB_TOKEN }}</password>
+            </server>
+          </servers>
+        </settings>" > ~/.m2/settings.xml
 
-  deploy-cobertura:
-    needs: deploy-maven
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-    - name: Generate Cobertura Report
-      run: mvn cobertura:cobertura
-      working-directory: AwesomePasswordChecker
-    - name: Deploy Cobertura Report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./target/site/cobertura
-        destination_dir: cobertura/${{ github.event.ref_name }}
+    # Step 5: Deploy to GitHub Maven Registry
+    - name: Deploy to GitHub Maven Registry
+      run: mvn clean deploy
+      env:
+        GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
