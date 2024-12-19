@@ -10,18 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout Code
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # Step 2: Set up JDK
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    # Step 3: Cache Maven Dependencies
     - name: Cache Maven Dependencies
       uses: actions/cache@v3
       with:
@@ -30,24 +27,20 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-m2
 
-    # Step 4: Create Maven `settings.xml`
     - name: Set up Maven settings.xml
+      working-directory: AwesomePasswordChecker
       run: |
         mkdir -p ~/.m2
         echo "<settings>
           <servers>
             <server>
               <id>github</id>
-              <username>${{ secrets.GITHUB_ACTOR }}</username>
+              <username>${{ github.actor }}</username>
               <password>${{ secrets.GITHUB_TOKEN }}</password>
             </server>
           </servers>
         </settings>" > ~/.m2/settings.xml
 
-    # Step 5: Deploy to GitHub Maven Registry
     - name: Deploy to GitHub Maven Registry
-      run: mvn clean deploy
       working-directory: AwesomePasswordChecker
-      env:
-        GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: mvn clean deploy
