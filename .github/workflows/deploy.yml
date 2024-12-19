@@ -23,11 +23,10 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-m2
-    - name: Navigate to Java Project Directory
-      working-directory: AwesomePasswordChecker
 
     - name: Build and Deploy to GitHub Maven Registry
       run: mvn clean install deploy
+      working-directory: AwesomePasswordChecker
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -42,6 +41,7 @@ jobs:
         distribution: 'temurin'
     - name: Generate Cobertura Report
       run: mvn cobertura:cobertura
+      working-directory: AwesomePasswordChecker
     - name: Deploy Cobertura Report to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
