@@ -11,6 +11,9 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
     - name: Set up JDK
       uses: actions/setup-java@v3
@@ -24,9 +27,11 @@ jobs:
       run: mvn checkstyle:check
 
     - name: Run Unit Tests
+      working-directory: AwesomePasswordChecker
       run: mvn test
 
     - name: Run Coverage Analysis
+      working-directory: AwesomePasswordChecker
       run: mvn jacoco:report
 
     - name: Ensure 90% Coverage
@@ -38,4 +43,5 @@ jobs:
         fi
 
     - name: Run Performance Tests
+      working-directory: AwesomePasswordChecker
       run: mvn test -Pperformance
