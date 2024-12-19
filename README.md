@@ -25,3 +25,31 @@
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/mselvaghae/codeReview.git
+---
+
+## Documentation
+- La documentation complète du projet, y compris les détails sur l'API et les exemples d'utilisation, est disponible ici :
+[👉 Javadoc](https://mselvaghae.github.io/TP1codeReview/javadoc/3.4.1)
+
+---
+
+## Contribuer
+- Forkez le dépôt.
+- Créez une branche pour votre fonctionnalité :
+   ```bash
+   git checkout -b feature/nouvelle-fonctionnalite
+   
+- Faites vos modifications, ajoutez vos commits et poussez la branche :
+   ```bash
+   git add .
+   git commit -m "Ajout d'une nouvelle fonctionnalité"
+   git push origin feature/nouvelle-fonctionnalite
+- Ouvrez une Pull Request.
+---
+## Licence
+- Ce projet est sous licence MIT [LICENCE](https://github.com/mselvaghae/TP1codeReview/blob/main/LICENSE)
+pour plus d'informations.
+---
+## Contact
+- Pour toute question ou suggestion, veuillez ouvrir une issue dans le dépôt GitHub :
+[👉 TP1codeReview Issues](https://github.com/mselvaghae/TP1codeReview/issues/new/choose)
