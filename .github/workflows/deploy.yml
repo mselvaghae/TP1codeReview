@@ -47,6 +47,7 @@ jobs:
     # Step 5: Deploy to GitHub Maven Registry
     - name: Deploy to GitHub Maven Registry
       run: mvn clean deploy
+      working-directory: AwesomePasswordChecker
       env:
         GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
