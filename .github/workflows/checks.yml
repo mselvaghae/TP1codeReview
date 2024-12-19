@@ -21,6 +21,7 @@ jobs:
         java-version: '17'
 
     - name: Install Semgrep
+      working-directory: AwesomePasswordChecker
       run: pip install semgrep
 
     - name: Run Checkstyle
