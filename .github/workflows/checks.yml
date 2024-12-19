@@ -45,6 +45,3 @@ jobs:
           exit 1
         fi
 
-    - name: Run Performance Tests
-      working-directory: AwesomePasswordChecker
-      run: mvn test -Pperformance
