@@ -14,22 +14,19 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # Step 2: Navigate to the Java Project Directory
-    - name: Navigate to Java Project Directory
-      run: cd AwesomePasswordChecker
-
-    # Step 3: Set Up Java Environment
+    # Step 2: Set Up Java Environment
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
 
-    # Step 4: Generate Javadoc
+    # Step 3: Generate Javadoc (In Project Directory)
     - name: Generate Javadoc
       run: mvn clean javadoc:javadoc
+      working-directory: AwesomePasswordChecker
 
-    # Step 5: Deploy Javadoc to GH-Pages
+    # Step 4: Deploy Javadoc to GH-Pages
     - name: Deploy to GH-Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -38,6 +35,6 @@ jobs:
         branch: gh-pages
         destination_dir: javadoc/3.4.1
 
-    # Step 6: Add CNAME (Optional for Custom Domains)
+    # Step 5: Add CNAME (Optional for Custom Domains)
     - name: Add CNAME
       run: echo 'blah.com' > AwesomePasswordChecker/target/site/apidocs/CNAME
