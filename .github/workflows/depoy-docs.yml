@@ -34,7 +34,3 @@ jobs:
         publish_dir: AwesomePasswordChecker/target/site/apidocs
         publish_branch: gh-pages # Corrected input
         destination_dir: javadoc/3.4.1
-
-    # Step 5: Add CNAME (Optional for Custom Domains)
-    - name: Add CNAME
-      run: echo 'blah.com' > AwesomePasswordChecker/target/site/apidocs/CNAME
