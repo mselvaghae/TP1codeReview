@@ -35,7 +35,7 @@ body:
     id: actual
     attributes:
       label: "Actual Behavior"
-      description: "Describe what actually happened."
+      description: "Describe what actually happened!!"
       placeholder: "Describe what happened instead."
 
   - type: textarea
